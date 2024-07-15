@@ -1,27 +1,79 @@
-# ClaudeChatbot
+# Claude Chatbot
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0.
+This project is a chatbot using Anthropic's Claude API, developed with Angular and Firebase.
 
-## Development server
+## Initial Setup
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Prerequisites
+- Node.js (version 14 or higher)
+- Angular CLI
+- Firebase account
+- Anthropic Claude API key
 
-## Code scaffolding
+### Installation
+1. Clone the repository:
+   git clone https://github.com/your-name/claude-chatbot.git
+   cd claude-chatbot
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+2. Install dependencies:
+   npm install
+
+### Environment Configuration
+
+#### Frontend (Angular)
+1. Navigate to the `src/environments/` folder
+2. Create a file `environment.ts`
+3. Fill `environment.ts` with your Firebase configurations:
+   export const environment = {
+   production: false,
+   firebaseConfig: {
+   apiKey: 'YOUR_API_KEY',
+   authDomain: 'YOUR_AUTH_DOMAIN',
+   projectId: 'YOUR_PROJECT_ID',
+   // ... other Firebase configurations
+   }
+   };
+
+#### Backend (Firebase Functions)
+1. In the `functions/` folder, create a `.env` file
+2. Add your Claude API key:
+   CLAUDE_API_KEY=your_claude_api_key
+
+**Important Note:** Never commit your `environment.ts` and `.env` files containing real keys. They are excluded via `.gitignore` for security reasons.
+
+## Development
+
+To start the development server:
+ng serve
+Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+To build the project:
+ng build
+The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+## Deployment
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Ensure Firebase CLI is installed and configured.
+2. Deploy to Firebase:
+   firebase deploy
 
-## Running end-to-end tests
+### Deploying Functions
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+When you make changes to the backend functions or during the initial setup:
 
-## Further help
+1. Navigate to the `functions` directory:
+   cd functions
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+2. Install dependencies (if it's your first time or you've updated packages):
+   npm install
+
+3. Deploy only the functions:
+   firebase deploy --only functions
+
+This step is crucial after any modifications to your Firebase Functions or during the initial setup to ensure your backend is up to date.
+
+## Further Help
+
+For more help on Angular CLI, use `ng help` or check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
