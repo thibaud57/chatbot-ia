@@ -20,6 +20,32 @@ This project is a chatbot using Anthropic's Claude API, developed with Angular a
    npm install
 3. Navigate to cd functions and install dependencies: npm install
 
+### Firebase Setup
+
+1. Install the Firebase CLI globally if you haven't already: npm install -g firebase-tools
+2. Login to Firebase: firebase login
+3. Initialize Firebase in your project directory: firebase init
+   During the initialization process:
+   - Select "Functions" when prompted for which Firebase features to set up.
+   - Choose to use an existing project or create a new one.
+   - Select TypeScript for your functions.
+   - Say no to using ESLint or yes if you prefer to (you might fix some issue).
+   - Choose whether to install dependencies now or later.
+4. After initialization, open the `firebaserc` file in your project root. It should look like this:
+   ```
+   {
+     "projects": {
+       "default": "your-project-id"
+     }
+   }
+   ```
+5. If you need to change the Firebase project later, you can either:
+   - Modify the .firebaserc file directly.
+   - Use the Firebase CLI: firebase use [YOUR-NEW-PROJECT-ID]
+
+Make sure your Firebase project is properly set up with the necessary services for this application, including Functions and any other Firebase features you're using.
+Remember to update your environment files (`environment.ts` and `environment-development.ts`) with the correct Firebase configuration from your Firebase project settings.
+
 ### Environment Configuration
 
 #### Frontend (Angular)
@@ -53,6 +79,7 @@ export const environment = {
 
 **Important Note:** Never commit your `environment.ts` and `.env` files containing real keys. They are excluded
 via `.gitignore` for security reasons.
+
 
 ## Development
 
