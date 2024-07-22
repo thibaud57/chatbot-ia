@@ -5,12 +5,14 @@ This project is a chatbot using Anthropic's Claude API, developed with Angular a
 ## Initial Setup
 
 ### Prerequisites
+
 - Node.js (version 14 or higher)
 - Angular CLI
 - Firebase account
 - Anthropic Claude API key
 
 ### Installation
+
 1. Clone the repository:
    git clone https://github.com/your-name/claude-chatbot.git
    cd claude-chatbot
@@ -21,25 +23,36 @@ This project is a chatbot using Anthropic's Claude API, developed with Angular a
 ### Environment Configuration
 
 #### Frontend (Angular)
+
 1. Navigate to the `src/environments/` folder
-2. Create a file `environment.ts`
-3. Fill `environment.ts` with your Firebase configurations:
-   export const environment = {
-   production: false,
-   firebaseConfig: {
-   apiKey: 'YOUR_API_KEY',
-   authDomain: 'YOUR_AUTH_DOMAIN',
-   projectId: 'YOUR_PROJECT_ID',
-   // ... other Firebase configurations
-   }
-   };
+2. Create two files: `environment.ts` and `environment-development.ts` and copy `environment.example.ts` inside
+3. Fill `environment.ts` and `environment-development.ts` with your Firebase configurations:
+  ``` 
+export const environment = {
+      production: false,
+      firebaseConfig: {
+      apiKey: 'YOUR_API_KEY',
+      authDomain: 'YOUR_AUTH_DOMAIN',
+      projectId: 'YOUR_PROJECT_ID',
+      // ... other Firebase configurations
+      },
+      apiUrl: "https://[REGION]-[YOUR_FIREBASECONFIG_PROJECT_ID].cloudfunctions.net/api/chat"
+      // should looks like this url "https://europe-west1-nom-du-projet.cloudfunctions.net/api/chat"
+};
+```
 
 #### Backend (Firebase Functions)
-1. In the `functions/` folder, create a `.env` file
-2. Add your Claude API key:
-   CLAUDE_API_KEY=your_claude_api_key
 
-**Important Note:** Never commit your `environment.ts` and `.env` files containing real keys. They are excluded via `.gitignore` for security reasons.
+1. In the `functions/` folder, create a `.env` file
+2. Copy `functions/.env.example` in `functions/.env`
+3. Fill the values as:
+   ```
+   CLAUDE_API_KEY=your_claude_api_key
+   REGION=your_firebase_preferred_region
+   ```
+
+**Important Note:** Never commit your `environment.ts` and `.env` files containing real keys. They are excluded
+via `.gitignore` for security reasons.
 
 ## Development
 
@@ -72,8 +85,10 @@ When you make changes to the backend functions or during the initial setup:
 3. Deploy only the functions:
    firebase deploy --only functions
 
-This step is crucial after any modifications to your Firebase Functions or during the initial setup to ensure your backend is up to date.
+This step is crucial after any modifications to your Firebase Functions or during the initial setup to ensure your
+backend is up to date.
 
 ## Further Help
 
-For more help on Angular CLI, use `ng help` or check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+For more help on Angular CLI, use `ng help` or check out
+the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
