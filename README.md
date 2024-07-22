@@ -6,7 +6,7 @@ This project is a chatbot using Anthropic's Claude API, developed with Angular a
 
 ### Prerequisites
 
-- Node.js (version 14 or higher)
+- Node.js (version 18 or higher)
 - Angular CLI
 - Firebase account
 - Anthropic Claude API key
@@ -14,11 +14,11 @@ This project is a chatbot using Anthropic's Claude API, developed with Angular a
 ### Installation
 
 1. Clone the repository:
-   git clone https://github.com/your-name/claude-chatbot.git
+   git clone https://github.com/thibaud57/claude-chatbot.git
    cd claude-chatbot
-
 2. Install dependencies:
    npm install
+3. Navigate to cd functions and install dependencies: npm install
 
 ### Environment Configuration
 
@@ -29,7 +29,7 @@ This project is a chatbot using Anthropic's Claude API, developed with Angular a
 3. Fill `environment.ts` and `environment-development.ts` with your Firebase configurations:
   ``` 
 export const environment = {
-      production: false,
+      production: false // or true,
       firebaseConfig: {
       apiKey: 'YOUR_API_KEY',
       authDomain: 'YOUR_AUTH_DOMAIN',
@@ -60,6 +60,20 @@ To start the development server:
 ng serve
 Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
+## Customizing ChatService
+
+The ChatService allows you to customize certain parameters for the Claude API. You can modify the following parameters in the sendMessage method of chat.service.ts:
+- temperature: Controls the randomness of the model's output. Lower values make the output more deterministic, higher values make it more random. Default is 0.2.
+- maxTokens: The maximum number of tokens to generate in the response. Default is 2048.
+
+You can then call this method with custom values:
+```
+this.chatService.sendMessage(userMessage, 0.5, 1000).subscribe(
+   // ... handle the response
+);
+```
+
+
 ## Build
 
 To build the project:
@@ -70,7 +84,7 @@ The build artifacts will be stored in the `dist/` directory.
 
 1. Ensure Firebase CLI is installed and configured.
 2. Deploy to Firebase:
-   firebase deploy
+   firebase deploy or fireabse deploy
 
 ### Deploying Functions
 
