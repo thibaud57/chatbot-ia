@@ -1,5 +1,5 @@
 <div class="chat-container">
-    <div class="messages-container">
+    <div class="messages-container" #scrollContainer>
         <div *ngFor="let message of messages()" class="message" [ngClass]="message.role">
             <div class="message-content" [innerHTML]="message.content"></div>
         </div>
