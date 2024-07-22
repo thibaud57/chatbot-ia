@@ -7,30 +7,30 @@ import Anthropic from "@anthropic-ai/sdk";
 dotenv.config();
 
 const app = express();
-app.use(cors({ origin: true }));
+app.use(cors({origin: true}));
 app.use(express.json());
 
 const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY;
 const anthropic = new Anthropic({
     apiKey: CLAUDE_API_KEY,
 });
-
+const REGION = process.env.REGION || 'us-central1';
 
 app.post('/chat', async (req, res) => {
     try {
-        const { message } = req.body;
+        const {message, temperature = 0.2, maxTokens = 2048} = req.body;
         const completion = await anthropic.messages.create({
             model: "claude-3-5-sonnet-20240620",
-            temperature: 0.2,
-            max_tokens: 2048,
+            temperature,
+            max_tokens: maxTokens,
             messages: [
-                { role: "user", content: message }
+                {role: "user", content: message}
             ]
         });
         res.json(completion.content[0]);
     } catch (error) {
         const errorMessage = handleError(error);
-        res.status(500).json([{ type: 'error', text: errorMessage }]);
+        res.status(500).json([{type: 'error', text: errorMessage}]);
     }
 });
 
@@ -44,4 +44,4 @@ function handleError(error: unknown): string {
     }
 }
 
-export const api = functions.https.onRequest(app);
+export const api = functions.region(REGION).https.onRequest(app);

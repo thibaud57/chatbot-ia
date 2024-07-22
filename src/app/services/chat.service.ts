@@ -3,18 +3,18 @@ import {HttpClient} from "@angular/common/http";
 import {catchError, map, Observable, throwError} from "rxjs";
 import {TypeResponse} from "../enums/type-response";
 import {ChatResponse} from "../models/chat-response";
+import {environment} from "../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ChatService {
-    private apiUrl = 'https://us-central1-claude-chatbot.cloudfunctions.net/api/chat';
+    private apiUrl = environment.apiUrl;
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
-    sendMessage(message: string): Observable<string> {
-        return this.http.post<ChatResponse>(this.apiUrl, { message }).pipe(
+    sendMessage(message: string, temperature: number = 0.2, maxTokens: number = 2048): Observable<string> {
+        return this.http.post<ChatResponse>(this.apiUrl, { message, temperature, maxTokens }).pipe(
             map(response => {
                 if (response['type'] === TypeResponse.ERROR){
                     throw new Error(response.text);
