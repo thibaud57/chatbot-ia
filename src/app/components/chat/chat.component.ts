@@ -107,6 +107,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         ...msgs,
         { role: TypeRole.USER, content: formattedInput },
       ]);
+      this.newMessageAdded = true;
+      setTimeout(() => this.scrollToBottom(), 0);
       this.messageSubject.next(userInput);
       this.chatForm.patchValue({ userInput: '' });
     }
