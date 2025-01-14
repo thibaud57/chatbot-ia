@@ -1,16 +1,33 @@
 <div class="chat-container">
-    <div class="messages-container" #scrollContainer>
-        <div *ngFor="let message of messages()" class="message" [ngClass]="message.role">
-            <div class="message-content" [innerHTML]="message.content"></div>
-        </div>
+  <div class="messages-container" #scrollContainer>
+    <div
+      *ngFor="let message of messages()"
+      class="message"
+      [ngClass]="message.role"
+    >
+      <div class="message-content" [innerHTML]="message.content"></div>
     </div>
-    <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="input-container">
-        <textarea
-                formControlName="userInput"
-                placeholder="Tapez votre message ici..."
-                appEnterSubmit
-                (enterSubmit)="sendMessage()">
-        ></textarea>
-        <button type="submit" [disabled]="!chatForm.valid">Envoyer</button>
-    </form>
+  </div>
+  <form
+    [formGroup]="chatForm"
+    (ngSubmit)="sendMessage()"
+    class="input-container"
+  >
+    <textarea
+      formControlName="userInput"
+      placeholder="Tapez votre message ici..."
+      appEnterSubmit
+      (enterSubmit)="sendMessage()"
+    >
+        ></textarea
+    >
+    <div class="actions">
+      <select formControlName="selectedModel" class="model-selector">
+        <option *ngFor="let model of models" [value]="model">
+          {{ modelLabels[model] }}
+        </option>
+      </select>
+      <button type="submit" [disabled]="!chatForm.valid">Envoyer</button>
+    </div>
+  </form>
 </div>
