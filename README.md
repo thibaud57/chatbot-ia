@@ -1,135 +1,113 @@
-# Claude Chatbot
+# Chatbot IA
 
-This project is a chatbot using Anthropic's Claude API, developed with Angular and Firebase.
+Une interface de chat moderne permettant d'interagir avec différents modèles d'IA (Claude et ChatGPT).
 
-## Initial Setup
+## Fonctionnalités
 
-### Prerequisites
+- Interface de chat moderne et responsive
+- Support de plusieurs modèles d'IA :
+  - Claude (Anthropic) : `claude-3-5-sonnet-20241022`
+  - GPT-4 (OpenAI) : `gpt-4-0125-preview`
+  - GPT-4 O1 (OpenAI) : `o1-2024-12-17`
+- Formatage du code avec coloration syntaxique
+- Historique des conversations
+- Sélection facile du modèle à utiliser
 
-- Node.js (version 18 or higher)
+## Prérequis
+
+- Node.js (v18 ou supérieur)
 - Angular CLI
-- Firebase account
-- Anthropic Claude API key
+- Compte Anthropic (pour Claude)
+- Compte OpenAI (pour GPT-4)
 
-### Installation
+## Installation
 
-1. Clone the repository:
-   git clone https://github.com/thibaud57/claude-chatbot.git
-   cd claude-chatbot
-2. Install dependencies:
-   npm install
-3. Navigate to cd functions and install dependencies: npm install
+1. Cloner le repository :
 
-### Firebase Setup
-
-1. Install the Firebase CLI globally if you haven't already: npm install -g firebase-tools
-2. Login to Firebase: firebase login
-3. Initialize Firebase in your project directory: firebase init
-   During the initialization process:
-   - Select "Functions" when prompted for which Firebase features to set up.
-   - Choose to use an existing project or create a new one.
-   - Select TypeScript for your functions.
-   - Say no to using ESLint or yes if you prefer to (you might fix some issue).
-   - Choose whether to install dependencies now or later.
-4. After initialization, open the `firebaserc` file in your project root. It should look like this:
-   ```
-   {
-     "projects": {
-       "default": "your-project-id"
-     }
-   }
-   ```
-5. If you need to change the Firebase project later, you can either:
-   - Modify the .firebaserc file directly.
-   - Use the Firebase CLI: firebase use [YOUR-NEW-PROJECT-ID]
-
-Make sure your Firebase project is properly set up with the necessary services for this application, including Functions and any other Firebase features you're using.
-Remember to update your environment files (`environment.ts` and `environment-development.ts`) with the correct Firebase configuration from your Firebase project settings.
-
-### Environment Configuration
-
-#### Frontend (Angular)
-
-1. Navigate to the `src/environments/` folder
-2. Create two files: `environment.ts` and `environment-development.ts` and copy `environment.example.ts` inside
-3. Fill `environment.ts` and `environment-development.ts` with your Firebase configurations:
-  ``` 
-export const environment = {
-      production: false // or true,
-      firebaseConfig: {
-      apiKey: 'YOUR_API_KEY',
-      authDomain: 'YOUR_AUTH_DOMAIN',
-      projectId: 'YOUR_PROJECT_ID',
-      // ... other Firebase configurations
-      },
-      apiUrl: "https://[REGION]-[YOUR_FIREBASECONFIG_PROJECT_ID].cloudfunctions.net/api/chat"
-      // should looks like this url "https://europe-west1-nom-du-projet.cloudfunctions.net/api/chat"
-};
+```bash
+git clone [URL_DU_REPO]
+cd [NOM_DU_DOSSIER]
 ```
 
-#### Backend (Firebase Functions)
+2. Installer les dépendances :
 
-1. In the `functions/` folder, create a `.env` file
-2. Copy `functions/.env.example` in `functions/.env`
-3. Fill the values as:
-   ```
-   CLAUDE_API_KEY=your_claude_api_key
-   REGION=your_firebase_preferred_region
-   ```
+```bash
+npm install
+cd functions
+npm install
+```
 
-**Important Note:** Never commit your `environment.ts` and `.env` files containing real keys. They are excluded
-via `.gitignore` for security reasons.
+3. Configurer les variables d'environnement :
+   - Copier le fichier `.env.example` vers `.env` dans le dossier `functions`
+   - Remplir les variables suivantes :
+     ```
+     CLAUDE_API_KEY=votre_clé_api_claude
+     OPENAI_API_KEY=votre_clé_api_openai
+     REGION=us-central1
+     ```
 
+## Développement
 
-## Development
+1. Lancer le serveur de développement Angular :
 
-To start the development server:
+```bash
 ng serve
-Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Customizing ChatService
-
-The ChatService allows you to customize certain parameters for the Claude API. You can modify the following parameters in the sendMessage method of chat.service.ts:
-- temperature: Controls the randomness of the model's output. Lower values make the output more deterministic, higher values make it more random. Default is 0.2.
-- maxTokens: The maximum number of tokens to generate in the response. Default is 2048.
-
-You can then call this method with custom values:
-```
-this.chatService.sendMessage(userMessage, 0.5, 1000).subscribe(
-   // ... handle the response
-);
 ```
 
+2. Lancer les fonctions Firebase en local :
 
-## Build
+```bash
+cd functions
+npm run serve
+```
 
-To build the project:
-ng build
-The build artifacts will be stored in the `dist/` directory.
+L'application sera disponible sur `http://localhost:4200`
 
-## Deployment
+## Déploiement
 
-1. Ensure Firebase CLI is installed and configured.
-2. Deploy to Firebase:
-   firebase deploy or fireabse deploy
+1. Construire l'application :
 
-### Deploying Functions
+```bash
+ng build --prod
+```
 
-When you make changes to the backend functions or during the initial setup:
+2. Déployer sur Firebase :
 
-1. Navigate to the `functions` directory:
-   cd functions
+```bash
+firebase deploy
+```
 
-2. Install dependencies (if it's your first time or you've updated packages):
-   npm install
+## Configuration des APIs
 
-3. Deploy only the functions:
-   firebase deploy --only functions
+### Anthropic (Claude)
 
-This step is crucial after any modifications to your Firebase Functions or during the initial setup to ensure your
-backend is up to date.
+1. Créer un compte sur [console.anthropic.com](https://console.anthropic.com)
+2. Générer une clé API
+3. Ajouter la clé dans le fichier `.env`
 
-## Further Help
+### OpenAI (GPT-4)
 
-For more help on Angular CLI, use `ng help` or check out
-the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. Créer un compte sur [platform.openai.com](https://platform.openai.com)
+2. Générer une clé API
+3. Ajouter la clé dans le fichier `.env`
+
+## Limites des Modèles
+
+- Claude : 8192 tokens max
+- GPT-4 : 4096 tokens max
+- GPT-4 O1 : 4096 tokens max
+
+## Structure du Projet
+
+```
+├── src/
+│   ├── app/
+│   │   ├── components/
+│   │   │   └── chat/
+│   │   ├── services/
+│   │   └── models/
+│   └── environments/
+└── functions/
+    └── src/
+        └── index.ts
+```
